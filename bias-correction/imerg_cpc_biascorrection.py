@@ -26,14 +26,14 @@ NOTES
     Both variables in IMERG and GUGBDAP is written as "precipitationCal" and "precip"", 
     some adjustment are required: parsing filename, directory, variable name, etc.
 WORKING DIRECTORY
-	/input/imerg - put your IMERG data here
-	/input/cpc - put your GUGBADP data here
-	/output/{method}/corrected - location for corrected precipitation output
-	/output/{method}/factors - location for corrected multiplying factors output
-	/output/{method}/metrics - location for corrected statistical metrics output
+    /input/imerg - put your IMERG data here
+    /input/cpc - put your GUGBADP data here
+    /output/{method}/corrected - location for corrected precipitation output
+    /output/{method}/factors - location for corrected multiplying factors output
+    /output/{method}/metrics - location for corrected statistical metrics output
 DATA
-	IMERG: 
-	GUGBADP: https://psl.noaa.gov/data/gridded/data.cpc.globalprecip.html
+    IMERG: 
+    GUGBADP: https://psl.noaa.gov/data/gridded/data.cpc.globalprecip.html
 CONTACT
     Benny Istanto
     Climate Geographer
@@ -96,7 +96,8 @@ def scale(imerg_ds, cpc_ds, method='mean'):
     """
     def custom_scaling_factor(imerg_precip, cpc_precip, method='mean'):
 	    """
-	    Calculate the scaling factor for correcting the IMERG data using either the mean or median of the IMERG and CPC data.
+	    Calculate the scaling factor for correcting the IMERG data using either the mean or median of 
+	    the IMERG and CPC data.
 
 	    Parameters:
 	    - imerg_precip (xarray.DataArray): the IMERG precipitation data.
@@ -121,8 +122,8 @@ def scale(imerg_ds, cpc_ds, method='mean'):
 
     scaling_factor = custom_scaling_factor(imerg_ds['precipitationCal'], cpc_ds['precip'], method)
     corrected_ds = xr.Dataset(data_vars={'precipitation': (('time', 'lat', 'lon'), 
-    						xr.apply_ufunc(lambda x: x * scaling_factor, imerg_ds['precipitationCal'], 
-    						dask='parallelized', output_dtypes=[float]))},
+    				xr.apply_ufunc(lambda x: x * scaling_factor, imerg_ds['precipitationCal'], 
+    				dask='parallelized', output_dtypes=[float]))},
                               coords={'time': imerg_ds['time'],
                                       'lat': imerg_ds['lat'],
                                       'lon': imerg_ds['lon']})
@@ -131,7 +132,8 @@ def scale(imerg_ds, cpc_ds, method='mean'):
 
 def distribution(imerg_ds, cpc_ds):
 	"""
-    Correct the bias in the IMERG data using the distribution-based method, specifically the probability density function (PDF) matching method
+    Correct the bias in the IMERG data using the distribution-based method, specifically the probability 
+    density function (PDF) matching method
 
     Parameters:
     - imerg_ds (xarray.Dataset): the IMERG data to be corrected.
@@ -274,7 +276,8 @@ def lsc(imerg_ds, cpc_ds):
 
 def lscdf(imerg_ds, cpc_ds):
     """
-    Correct the bias in the IMERG data using the Linear Scaling (LS) and quantile-mapping Cumulative Distribution Function (CDF) matching approaches (LSCDF).
+    Correct the bias in the IMERG data using the Linear Scaling (LS) and quantile-mapping Cumulative 
+    Distribution Function (CDF) matching approaches (LSCDF).
 
     Parameters:
     - imerg_ds (xarray.Dataset): the IMERG data to be corrected.
