@@ -33,6 +33,9 @@ WORKING DIRECTORY
     /output/{method}/metrics - location for corrected statistical metrics output
 DATA
     IMERG: 
+    - Early: https://gpm1.gesdisc.eosdis.nasa.gov/data/GPM_L3/GPM_3IMERGDE.06/
+    - Late: https://gpm1.gesdisc.eosdis.nasa.gov/data/GPM_L3/GPM_3IMERGDL.06/
+    - Final: https://gpm1.gesdisc.eosdis.nasa.gov/data/GPM_L3/GPM_3IMERGDF.06/
     GUGBADP: https://psl.noaa.gov/data/gridded/data.cpc.globalprecip.html
 CONTACT
     Benny Istanto
