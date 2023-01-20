@@ -11,7 +11,8 @@ DESCRIPTION
     x. Bias Correction and Spatial Disaggregation (BCSD), 
     xi. Bias Correction and Spatially  Disaggregated Mapping (BCSDM), xii. Quantile-quantile mapping
     xiii. Empirical Quantile Mapping (eQM), xiv. Adjusted Quantile Mapping (aQM)
-    xv. 
+    xv. Gamma Distribution Quantile Mapping (gQM), 
+    xvi. Gamma and Generalized Pareto Distribution Quantile Mapping (gpdQM)
 REQUIREMENT
     It required os, calendar, numpy, xarray, pandas, scipy, and dask module. 
     So it will work on any machine environment
