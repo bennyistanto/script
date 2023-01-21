@@ -4,18 +4,24 @@ NAME
     imerg_cpc_biascorrection.py
 DESCRIPTION
     Bias correction using various methods:
-    i. Scale, ii. Distribution, iii. Delta, iv. the Least Squares Composite differencing (LSC)
+    i. Scale, 
+    ii. Distribution, iii. Delta, 
+    iv. the Least Squares Composite differencing (LSC)
     v. the Linear Scaling (LS) and quantile-mapping CDF matching approaches (LSCDF),
     vi.  Replacement-based Cumulative Distribution Function (RCDF) Mapping,
-    vii. Multi Linear ERegression, viii. Artificial Neural Network, ix. Kalman filtering,
+    vii. Multi Linear ERegression, 
+    viii. Artificial Neural Network, 
+    ix. Kalman filtering,
     x. Bias Correction and Spatial Disaggregation (BCSD), 
-    xi. Bias Correction and Spatially  Disaggregated Mapping (BCSDM), xii. Quantile-quantile mapping
+    xi. Bias Correction and Spatially  Disaggregated Mapping (BCSDM), 
+    xii. Quantile-quantile mapping
     xiii. Empirical Quantile Mapping (eQM), xiv. Adjusted Quantile Mapping (aQM)
-    xv. Gamma Distribution Quantile Mapping (gQM), 
-    xvi. Gamma and Generalized Pareto Distribution Quantile Mapping (gpdQM)
+    xiv. Gamma Distribution Quantile Mapping (gQM), 
+    xv. Gamma and Generalized Pareto Distribution Quantile Mapping (gpdQM)
 REQUIREMENT
     It required os, calendar, numpy, xarray, pandas, scipy, and dask module. 
-    So it will work on any machine environment
+    So it will work on any machine environment.
+    And please do check specific module in every function.
 HOW-TO USE
     python imerg_cpc_biascorrection.py
 NOTES
@@ -1021,6 +1027,10 @@ def main(run_all_methods=False, method=None):
     # Compute the corrected data for all years in parallel
     corrected_ds_list = dask.compute(*corrected_ds_list)
 
+    # Encoding for CF 1.8
+    cf18 = {'precipitation': {'dtype': 'float32', 'scale_factor': 0.1, 'zlib': True, \
+    '_FillValue': -9999, 'add_offset': 0, 'least_significant_digit': 1}}
+
     """
     The `zip` function is used here to iterate over the three lists `methods`, `range(2001, 2023)`, and 
     `corrected_ds_list` simultaneously. The `*` operator is used to repeat the elements of the `methods` 
@@ -1032,12 +1042,12 @@ def main(run_all_methods=False, method=None):
     """
     # Save the corrected data to a NetCDF file
     for method, year, corrected_ds in zip(methods*(2022-2001+1), range(2001, 2023)*len(methods), corrected_ds_list):
-        corrected_ds.to_netcdf(f'output/{method}/corrected/corrected_{method}_{year}.nc')
+        corrected_ds.to_netcdf(f'output/{method}/corrected/corrected_{method}_{year}.nc', encoding=cf18)
         
         dekad_factors = create_multiplying_factors(corrected_ds)
         
         for i, factor in enumerate(dekad_factors):
-            factor.to_netcdf(f'output/{method}/factors/multiplying_factor_{method}_{i+1}.nc')
+            factor.to_netcdf(f'output/{method}/factors/multiplying_factor_{method}_{i+1}.nc', encoding=cf18)
 
         # Calculate the metrics for the corrected data
         year_metrics = calculate_metrics(corrected_ds, cpc_year_ds)
