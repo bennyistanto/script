@@ -5,7 +5,8 @@ NAME
 DESCRIPTION
     Bias correction using various methods:
     i. Scale, 
-    ii. Distribution, iii. Delta, 
+    ii. Distribution, 
+    iii. Delta, 
     iv. the Least Squares Composite differencing (LSC)
     v. the Linear Scaling (LS) and quantile-mapping CDF matching approaches (LSCDF),
     vi.  Replacement-based Cumulative Distribution Function (RCDF) Mapping,
