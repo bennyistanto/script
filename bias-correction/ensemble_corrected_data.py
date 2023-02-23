@@ -47,7 +47,7 @@ import pandas as pd
 
 def ensemble_method(corrected_ds_list, cpc_ds, method='decisiontree'):
     """
-    Correct the bias in the IMERG data using the Replacement-based CDF Mapping method or other methods.
+    Ensemble the corrected precipitation data using various methods.
 
     Parameters:
     - imerg_ds (xarray.Dataset): the IMERG data to be corrected.
