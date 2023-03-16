@@ -33,10 +33,10 @@ from datetime import datetime, timedelta
 arcpy.env.overwriteOutput = True
 
 # ISO3 Country Code
-iso3 = "syr" # Syria
+iso3 = "mmr" # Myanmar
 
 # Change the data and output folder
-input_folder = "X:\\Temp\\modis\\{}\\gee\\02_positive".format(iso3)
+input_folder = "X:\\Temp\\modis\\{}\\gee\\02_positive\\temp".format(iso3)
 output_folder = "X:\\Temp\\modis\\{}\\gee\\03_statistics\\temp".format(iso3)
 
 # Create file collection based on date information
@@ -80,19 +80,19 @@ for groupkey, files in groups.items():
 
     # Output filenames
     newfilenames = [
-        f"{iso3}_phy_mxd13q1_20yr_{stat}_{groupkey}{ext}"
+        f"{iso3}_phy_mxd13q1_20yr_{stat}_{groupkey.zfill(3)}{ext}"
         for stat in stat_names.values()
     ]
 
-    for filename in newfilenames:
+    for i, filename in enumerate(newfilenames):
         if arcpy.Exists(os.path.join(output_folder, filename)):
             print(filename + " exists")
         else:
-            stat_type = list(stat_names.keys())[list(stat_names.values()).index(filename.split("_")[5])]
+            stat_type = list(stat_names.keys())[list(stat_names.values()).index(list(stat_names.values())[i])]
             
             arcpy.CheckOutExtension("spatial")
             outCellStatistics = arcpy.sa.CellStatistics(files, stat_type, "DATA")
             outCellStatistics.save(os.path.join(output_folder, filename))
             arcpy.CheckInExtension("spatial")
 
-    
+            print(filename + " completed")
