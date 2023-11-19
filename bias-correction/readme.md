@@ -13,3 +13,7 @@ After this steps are done, you can start the correction. Both variables in IMERG
 `/output/{method}/corrected` - location for corrected precipitation output</br>
 `/output/{method}/factors` - location for corrected multiplying factors output</br>
 `/output/{method}/metrics` - location for corrected statistical metrics output</br>
+
+WORKING IN PROGRESS
+
+Some script have not been tested, also need some adjustment and improvement.
